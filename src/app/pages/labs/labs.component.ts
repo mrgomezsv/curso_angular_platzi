@@ -20,4 +20,13 @@ export class LabsComponent {
     'Pagar el teléfono',
     'Pagar el internet',
   ]
+  private name = 'Juan';
+  lastName = 'Perez';
+  age = 25;
+  email = 'juan.perez@gmail.com';
+  phone = '+54 9 11 3333-4444';
+  address = 'Av. Corrientes 123';
+  city = 'Buenos Aires';
+  country = 'Argentina';
+
 }
