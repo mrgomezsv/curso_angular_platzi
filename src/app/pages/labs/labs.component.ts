@@ -38,4 +38,14 @@ export class LabsComponent {
     age: 18,
     avatar: 'https://mrgomezsv.github.io/img/profile.jpg'
   }
+
+  clickHandler() {
+    alert('click');
+    // this.disabled = !this.disabled;
+  }
+
+
+  changeInput(event: Event) {
+    console.log(event);
+  } 
 }
