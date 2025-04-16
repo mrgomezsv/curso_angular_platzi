@@ -34,4 +34,7 @@
 <p>(keydown)</p>
 <input type="text" [value]="person.name" (keydown)="keydownHandler($event)">
 
+<p>(keydown)</p>
+<input type="text" [value]="person.name" (keydown.shift.t)="clickHandler()">
+
 </div>
