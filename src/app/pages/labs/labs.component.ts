@@ -55,4 +55,14 @@ export class LabsComponent {
     const input = event.target as HTMLInputElement
     console.log(input.value);
   }
+
+  tasks2 = signal([
+    'Ir al gimnasio',
+    'Pagar la luz',
+    'Pagar el agua',
+    'Pagar el internet',
+    'Pagar el gas',
+    'Pagar el teléfono',
+    'Pagar el internet',
+  ])
 }
