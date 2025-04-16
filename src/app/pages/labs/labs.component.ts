@@ -33,11 +33,10 @@ export class LabsComponent {
   img = 'https://w3schools.com/howto/img_avatar.png';
   disabled = true;
 
-  person = {
+  person = signal({
     name: 'Mario',
-    age: 18,
-    avatar: 'https://mrgomezsv.github.io/img/profile.jpg'
-  }
+    age: 20
+  });
 
   clickHandler() {
     alert('click');
@@ -65,4 +64,18 @@ export class LabsComponent {
     'Pagar el teléfono',
     'Pagar el internet',
   ])
+
+  cambiarEdad() {
+    this.person.update(person => ({
+      ...person,
+      age: person.age === 18 ? 14 : 18
+    }));
+  }
+
+  cambiarNombre() {
+    this.person.update(person => ({
+      ...person,
+      name: person.name === 'Mario' ? 'Juan' : 'Mario'
+    }));
+  }
 }

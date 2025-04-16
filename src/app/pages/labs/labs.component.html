@@ -20,22 +20,22 @@
 
 <input type="text" [(ngModel)]="nameUser">
 <button [disabled]="disabled">Click me</button>
-<p>person: {{ person.name }} </p>
+<p>person: {{ person().name }} </p>
 
-<input type="number" [value]="person.age">
+<input type="number" [value]="person().age">
 
 <button (click)="clickHandler()">Click me mario</button>
 
 <button (dblclick)="clickHandler()">Double Click me</button>
 <p>(change)</p>
-<input type="number" [value]="person.age" (change)="changeInput($event)">
+<input type="number" [value]="person().age" (change)="changeInput($event)">
 <p>(change)</p>
-<input type="number" [value]="person.age" (change)="changeInput($event)">
+<input type="number" [value]="person().age" (change)="changeInput($event)">
 <p>(keydown)</p>
-<input type="text" [value]="person.name" (keydown)="keydownHandler($event)">
+<input type="text" [value]="person().name" (keydown)="keydownHandler($event)">
 
 <p>(keydown)</p>
-<input type="text" [value]="person.name" (keydown.shift.t)="clickHandler()">
+<input type="text" [value]="person().name" (keydown.shift.t)="clickHandler()">
 <hr>
 <h1>Signals</h1>
 
@@ -50,5 +50,30 @@
   </li>
 </ul>
 
+<hr>
+<div *ngIf="1 !== 1">
+  Content
+</div>
+<div *ngIf="name() === 'Juan'">
+  Subcription
+</div>
+<div *ngIf="person().age >= 14; else miBloque">
+  Mayor de edad
+</div>
+<ng-template #miBloque>
+  Menor de edad
+</ng-template>
+
+<div *ngIf="person().name === 'Mario' && person().age >= 18; else miBloque">
+  <h3>Información del Usuario</h3>
+  <p>Nombre: {{ person().name }}</p>
+  <p>Edad: {{ person().age }}</p>
+  <p>Estado: Mayor de edad</p>
+</div>
+<ng-template #miBloque>
+  <h3>Información del Usuario</h3>
+  <p>Nombre: {{ person().name }}</p>
+  <p>Edad: {{ person().age }}</p>
+</ng-template>
 
 </div>
