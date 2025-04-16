@@ -1,11 +1,12 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-labs',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './labs.component.html',
   styleUrl: './labs.component.css'
 })
@@ -42,6 +43,15 @@ export class LabsComponent {
     alert('click');
     // this.disabled = !this.disabled;
   }
+
+  colorCtrl = new FormControl('#000000');
+
+  constructor() {
+    this.colorCtrl.valueChanges.subscribe(value => {
+      console.log(value);
+    });
+  }
+  
 
 
   changeInput(event: Event) {

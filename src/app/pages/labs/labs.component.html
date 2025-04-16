@@ -78,4 +78,10 @@
 
 <div [ngSwitch]="person().name">
   <p *ngSwitchCase="'Mario'">El Nombre del usuario: {{ person().name }}</p>
+
+
+
+  <hr>
+  <input type="color" [formControl]="colorCtrl">
+  <p>Color: {{ colorCtrl.value }}</p>
 </div>
