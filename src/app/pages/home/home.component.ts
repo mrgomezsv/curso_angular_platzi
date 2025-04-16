@@ -18,4 +18,14 @@ export class HomeComponent {
     'Pagar el teléfono',
     'Pagar el internet',
   ]);
+
+  changeHandler(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const newValue = input.value;
+    this.tasks2.update((task2) => [...this.tasks2(), newValue]);
+  }
+
+  deleteTask(index: number) {
+    this.tasks2.update((task2) => task2.filter((task, position) => position !== index));
+  }
 }
