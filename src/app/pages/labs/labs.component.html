@@ -76,4 +76,6 @@
   <p>Edad: {{ person().age }}</p>
 </ng-template>
 
+<div [ngSwitch]="person().name">
+  <p *ngSwitchCase="'Mario'">El Nombre del usuario: {{ person().name }}</p>
 </div>
