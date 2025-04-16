@@ -5,16 +5,16 @@
   <li *ngFor="let task of tasks">{{ task }}</li>
 </ul>
 <p>Usuario numero {{ 8 * 3 }}</p>
-<p>{{ name }} {{ lastName }}</p>
+<p>{{ name() }} {{ lastName }}</p>
 <p>{{ age }}</p>
 <p>{{ email }}</p>
 <p>{{ phone }}</p>
 <p>{{ address }}</p>
 <p>{{ city }}</p>
 <p>{{ country }}</p>
-<p>{{ name }} {{ lastName }} {{ age }}</p>
+<p>{{ name() }} {{ lastName }} {{ age }}</p>
 
-<p> el usuario se llama {{ name }} {{ lastName }} y tiene {{ age }} años</p>
+<p> el usuario se llama {{ name() }} {{ lastName }} y tiene {{ age }} años</p>
 
 <img [src]="img" alt="Imagen">
 
@@ -36,5 +36,10 @@
 
 <p>(keydown)</p>
 <input type="text" [value]="person.name" (keydown.shift.t)="clickHandler()">
+<hr>
+<h1>Signals</h1>
 
+<input type="text" [value]="name()" (change)="changeInput($event)">
+<p>name: {{ name() }}</p>
+<p>name: {{ name() }}</p>
 </div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -21,7 +21,7 @@ export class LabsComponent {
     'Pagar el teléfono',
     'Pagar el internet',
   ]
-  name = 'Juan';
+  name = signal('Juan');
   lastName = 'Perez';
   age = 25;
   email = 'juan.perez@gmail.com';
@@ -46,7 +46,9 @@ export class LabsComponent {
 
 
   changeInput(event: Event) {
-    console.log(event);
+    const input = event.target as HTMLInputElement
+    const newValue = input.value;
+    this.name.set(newValue);
   } 
 
   keydownHandler(event: KeyboardEvent) {
