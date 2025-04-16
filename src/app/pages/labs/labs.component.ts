@@ -28,5 +28,7 @@ export class LabsComponent {
   address = 'Av. Corrientes 123';
   city = 'Buenos Aires';
   country = 'Argentina';
+  nameUser = 'Mario';
 
+  disabled = true;
 }
