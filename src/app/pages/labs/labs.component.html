@@ -15,8 +15,10 @@
 
 <p> el usuario se llama {{ name }} {{ lastName }} y tiene {{ age }} años</p>
 
-<img src="" alt="">
+<img [src]="img" alt="Imagen">
 
-
-<input type="text" [name]="nameUser">
+<input type="text" [(ngModel)]="nameUser">
 <button [disabled]="disabled">Click me</button>
+<p>person: {{ person.name }} </p>
+
+<input type="number" [value]="person.age">

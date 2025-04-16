@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-labs',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './labs.component.html',
   styleUrl: './labs.component.css'
 })
@@ -20,7 +21,7 @@ export class LabsComponent {
     'Pagar el teléfono',
     'Pagar el internet',
   ]
-  private name = 'Juan';
+  name = 'Juan';
   lastName = 'Perez';
   age = 25;
   email = 'juan.perez@gmail.com';
@@ -29,6 +30,12 @@ export class LabsComponent {
   city = 'Buenos Aires';
   country = 'Argentina';
   nameUser = 'Mario';
-
+  img = 'https://w3schools.com/howto/img_avatar.png';
   disabled = true;
+
+  person = {
+    name: 'Mario',
+    age: 18,
+    avatar: 'https://mrgomezsv.github.io/img/profile.jpg'
+  }
 }
