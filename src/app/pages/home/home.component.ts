@@ -30,6 +30,8 @@ export class HomeComponent {
     }
   ]);
 
+  editingTaskId = signal<number | null>(null);
+
   changeHandler(event: Event) {
     const input = event.target as HTMLInputElement;
     const newTask = input.value;
@@ -64,5 +66,9 @@ export class HomeComponent {
         return task;
       })
     })
+  }
+
+  toggleEditMode(taskId: number) {
+    this.editingTaskId.update(currentId => currentId === taskId ? null : taskId);
   }
 }

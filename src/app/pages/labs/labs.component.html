@@ -84,4 +84,22 @@
   <hr>
   <input type="color" [formControl]="colorCtrl">
   <p>Color: {{ colorCtrl.value }}</p>
+
+
+  <hr>
+  <p>
+    <input type="text" [formControl]="nameCtrl"> <br/>
+    <span class="message-error" [class.show]="nameCtrl.invalid && nameCtrl.touched">Nombre Invalido</span>
+    <p>Estado del campo:</p>
+    <ul>
+      <li>Valor actual: {{ nameCtrl.value }}</li>
+      <li>Válido: {{ nameCtrl.valid }}</li>
+      <li>Tocado: {{ nameCtrl.touched }}</li>
+      <li>Pristine: {{ nameCtrl.pristine }}</li>
+    </ul>
+
+  <p>
+    <input type="text" [formControl]="nameCtrl2"> <br/>
+    <span class="message-error" [class.show]="nameCtrl2.invalid && nameCtrl2.touched">Nombre Invalido</span>
+  </p>
 </div>

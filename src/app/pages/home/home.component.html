@@ -21,13 +21,18 @@
       </pre>
       <section class="main">
         <ul class="todo-list">
-          <li *ngFor="let task of tasks(); index as i">
+          <li *ngFor="let task of tasks(); index as i" 
+              [class.completed]="task.completed"
+              [class.editing]="editingTaskId() === task.id">
             <div class="view">
-              <input class="toggle" type="checkbox" [checked]="task.completed" (change) = "updateTask(i)" />
-              <label>{{ task.title }}</label>
+              <input class="toggle" type="checkbox" [checked]="task.completed" (change)="updateTask(i)" />
+              <label (dblclick)="toggleEditMode(task.id)">{{ task.title }}</label>
               <button class="destroy" (click)="deleteTask(i)"></button>
             </div>
-            <input class="edit" value="Learn JavaScript" />
+            <input class="edit" 
+                   [value]="task.title"
+                   (blur)="toggleEditMode(task.id)"
+                   (keyup.enter)="toggleEditMode(task.id)" />
           </li>
           <li>
             <!-- <div class="view">
