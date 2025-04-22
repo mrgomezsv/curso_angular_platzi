@@ -1,74 +1,149 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
-import { Task } from '../../models/task.model';
-
+interface Task {
+  id: number;
+  title: string;
+  completed: boolean;
+}
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  tasks = signal<Task[]>([
+  private tasks = signal<Task[]>([
     {
-      id: Date.now(),
+      id: 1,
       title: 'Ir al gimnasio',
       completed: false,
     },
     {
-      id: Date.now(),
+      id: 2,
       title: 'Pagar la luz',
       completed: false,
     },
     {
-      id: Date.now(),
+      id: 3,
       title: 'Pagar el agua',
       completed: false,
     }
   ]);
 
-  editingTaskId = signal<number | null>(null);
+  private editingTaskId = signal<number | null>(null);
+  private editingTaskTitle = signal<string>('');
 
-  changeHandler(event: Event) {
-    const input = event.target as HTMLInputElement;
-    const newTask = input.value;
-    if (newTask.trim()) {
-      this.addTask(newTask);
-      input.value = '';
+  // Computed properties
+  readonly pendingTasks = computed(() => this.tasks().filter(task => !task.completed).length);
+  readonly hasCompletedTasks = computed(() => this.tasks().some(task => task.completed));
+  readonly filteredTasks = computed(() => {
+    const currentRoute = window.location.pathname;
+    if (currentRoute === '/pending') {
+      return this.tasks().filter(task => !task.completed);
+    } else if (currentRoute === '/completed') {
+      return this.tasks().filter(task => task.completed);
     }
+    return this.tasks();
+  });
+
+  // Public methods for template
+  getTasks() {
+    return this.tasks();
   }
 
+  getFilteredTasks() {
+    return this.filteredTasks();
+  }
+
+  isEditing(taskId: number): boolean {
+    return this.editingTaskId() === taskId;
+  }
+
+  getEditingTitle(): string {
+    return this.editingTaskTitle();
+  }
+
+  // Task management methods
   addTask(title: string) {
+    if (!title.trim()) return;
+    
     const newTask: Task = {
       id: Date.now(),
-      title,
+      title: title.trim(),
       completed: false,
     };
+    
     this.tasks.update(tasks => [...tasks, newTask]);
   }
 
-  deleteTask(index: number) {
-    this.tasks.update((task) => task.filter((task, position) => position !== index));
+  deleteTask(taskId: number) {
+    this.tasks.update(tasks => tasks.filter(task => task.id !== taskId));
   }
 
-  updateTask(index: number) {
-    this.tasks.update((task) => {
-      return task.map((task, position) => {
-        if (position == index) {
-          return {
-            ...task,
-            completed: !task.completed,
-          }
-        }
-        return task;
-      })
-    })
+  toggleTaskCompletion(taskId: number) {
+    this.tasks.update(tasks => 
+      tasks.map(task => 
+        task.id === taskId 
+          ? { ...task, completed: !task.completed }
+          : task
+      )
+    );
   }
 
-  toggleEditMode(taskId: number) {
-    this.editingTaskId.update(currentId => currentId === taskId ? null : taskId);
+  startEditing(taskId: number) {
+    const task = this.tasks().find(t => t.id === taskId);
+    if (task) {
+      this.editingTaskTitle.set(task.title);
+      this.editingTaskId.set(taskId);
+    }
+  }
+
+  saveTask(taskId: number) {
+    const newTitle = this.editingTaskTitle().trim();
+    if (newTitle) {
+      this.tasks.update(tasks => 
+        tasks.map(task => 
+          task.id === taskId 
+            ? { ...task, title: newTitle }
+            : task
+        )
+      );
+    }
+    this.cancelEditing();
+  }
+
+  cancelEditing() {
+    this.editingTaskId.set(null);
+    this.editingTaskTitle.set('');
+  }
+
+  updateEditingTitle(title: string) {
+    this.editingTaskTitle.set(title);
+  }
+
+  clearCompleted() {
+    this.tasks.update(tasks => tasks.filter(task => !task.completed));
+  }
+
+  // Event handlers
+  handleNewTask(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.addTask(input.value);
+    input.value = '';
+  }
+
+  handleEditEvent(event: Event, taskId: number) {
+    const input = event.target as HTMLInputElement;
+    this.updateEditingTitle(input.value);
+  }
+
+  handleSaveEvent(event: Event, taskId: number) {
+    if (event.type === 'blur' || (event instanceof KeyboardEvent && event.key === 'Enter')) {
+      this.saveTask(taskId);
+    }
   }
 }
